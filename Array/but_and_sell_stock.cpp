@@ -26,6 +26,11 @@ using namespace std;
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
+        //APPROACH-1
+        //bruteforce approach->run 2 loops
+
+        //APPROACH-II
+        //Use extra space to keep track of max/min
         vector<int> v(prices.size(),INT_MAX);
         int minval=INT_MAX,maxval=-1;
         //Keeping track of minval
@@ -42,5 +47,16 @@ public:
             }
         }
         return maxval;
+
+        //APPROACH-III
+        //Keep track of profit
+         int maxprofit=0;
+        int minval=prices[0];
+        for(int i=0;i<prices.size();i++){
+            minval=min(minval,prices[i]);
+            int profithere=prices[i]-minval;
+            maxprofit=max(maxprofit,profithere);
+        }
+        return maxprofit;
     }
 };
