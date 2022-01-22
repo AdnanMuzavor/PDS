@@ -95,3 +95,47 @@ public:
         return op;
     }
 };
+
+//An optimised and clean approach
+class Solution 
+{
+public:
+    // function to check wheather an array can form an arithmetic sequence or not
+    bool isArithmetic(vector<int>&arr) {
+        
+        // sort the array
+        sort(arr.begin(),arr.end());
+        
+        // check the condition for arithmetic sequence
+        for(int i=0;i<arr.size()-2;i++) {
+            if(arr[i+1]-arr[i]!=arr[i+2]-arr[i+1]) {
+                return false;
+            }
+        }
+        return true;
+    }
+    vector<bool>checkArithmeticSubarrays(vector<int>&nums,vector<int>&l,vector<int>&r) 
+    {
+        // 'ans' will be our answer
+        vector<bool>ans(l.size());
+        
+        // iterate over the queries and populate the 'ans' vector
+        for(int i=0;i<l.size();i++) {
+            // if the size of the subarray is less than 2 then it can't be an arithmetic sequence
+            if(r[i]-l[i]+1<2) {
+                ans[i]=false;
+            }
+            else {
+                // store the subarray elements in a temporary array
+                vector<int>tmp(r[i]-l[i]+1);
+                copy(nums.begin()+l[i],nums.begin()+r[i]+1,tmp.begin());
+                
+                // call the function and store the result
+                ans[i]=isArithmetic(tmp);
+            }
+        }
+        
+        // finally return the answer
+        return ans;
+    }
+};
