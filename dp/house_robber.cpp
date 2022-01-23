@@ -13,7 +13,7 @@ You are a professional robber planning to rob houses along a street. Each house 
 
 Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
 
- 
+
 
 Example 1:
 
@@ -31,7 +31,7 @@ Total amount you can rob = 2 + 9 + 1 = 12.
 
 // class Solution {
 // public:
-    //RECURSIVE BRUTE FORCE APPROACH
+// RECURSIVE BRUTE FORCE APPROACH
 //     int solve(vector<int> &dp,vector<int> n,int i){
 //         //Actuallu used when your dp exceeds nums.size()
 //         if(i<=-1) return 0;
@@ -50,30 +50,36 @@ Total amount you can rob = 2 + 9 + 1 = 12.
 //         return sum;
 //     }
 // };
-
-//Optimised solution without recursion
-class Solution {
+#include <bits/stdc++.h>
+using namespace std;
+// Optimised solution without recursion
+class Solution
+{
 public:
-    int rob(vector<int>& nums) {
-        int n=nums.size();
-        if(n==0) return 0;
-        if(n==1) return nums[0];
+    int rob(vector<int> &nums)
+    {
+        int n = nums.size();
+        if (n == 0)
+            return 0;
+        if (n == 1)
+            return nums[0];
         // if(n==2) return max(nums[0],nums[1]);
-        int *dp=new int[n];
-        dp[0]=nums[0]; //profit till house zero/1 house case
-        dp[1]=max(nums[0],nums[1]); //If 2 houses choose profitable one
-        for(int i=2;i<n;i++){
-            
-            //Choosing current house i.e nums[i] means combo of
-            //current house nums[i] and profit till nums[i-2] house
-            //hence nums[i]+dp[i-2]
-            
-            //If we don't choose current house, we can choose, means we lke to opt for combo
-            //pf prev house i.e dp[i-1]
-            
-            //Choice depends upon which is maximum among two
-            dp[i]=max(nums[i]+dp[i-2],dp[i-1]);
+        int *dp = new int[n];
+        dp[0] = nums[0];               // profit till house zero/1 house case
+        dp[1] = max(nums[0], nums[1]); // If 2 houses choose profitable one
+        for (int i = 2; i < n; i++)
+        {
+
+            // Choosing current house i.e nums[i] means combo of
+            // current house nums[i] and profit till nums[i-2] house
+            // hence nums[i]+dp[i-2]
+
+            // If we don't choose current house, we can choose, means we lke to opt for combo
+            // pf prev house i.e dp[i-1]
+
+            // Choice depends upon which is maximum among two
+            dp[i] = max(nums[i] + dp[i - 2], dp[i - 1]);
         }
-        return dp[n-1];
+        return dp[n - 1];
     }
 };
