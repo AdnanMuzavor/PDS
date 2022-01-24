@@ -13,7 +13,7 @@ Given a binary search tree (BST), find the lowest common ancestor (LCA) of two g
 
 According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”
 
- 
+
 
 Example 1:
 
@@ -45,21 +45,57 @@ struct TreeNode
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
+// 3 ways, method same but just extra code lines
+// 1st effective way((95%))
+TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *p, TreeNode *q)
+{
+    if (!root || root == p || root == q)
+        return root;
+    TreeNode *left = lowestCommonAncestor(root->left, p, q);
+    TreeNode *right = lowestCommonAncestor(root->right, p, q);
+    return !left ? right : !right ? left
+                                  : root;
+}
 
-class Solution {
+// 2nd effective way((77%))
+TreeNode *lowestCommonAncestor(TreeNode *r, TreeNode *p, TreeNode *q)
+{
+    if (!r)
+        return NULL;
+    if (r == p || r == q)
+        return r;
+    TreeNode *lt = lowestCommonAncestor(r->left, p, q);
+    TreeNode *rt = lowestCommonAncestor(r->right, p, q);
+    if (lt && rt)
+        return r;
+    if (lt)
+        return lt;
+    else
+        return rt;
+}
+// 3rd effective way((55%))
+class Solution
+{
 public:
-    TreeNode* LCA(TreeNode*r,int r1,int r2){
-        if(!r) return NULL;
-        if(r->val==r1||r->val==r2) return r;
-        TreeNode*lt=LCA(r->left,r1,r2);
-        TreeNode*rt=LCA(r->right,r1,r2);
-        if(lt && rt)return r;
-        if(lt) return lt;
-        else return rt;
+    TreeNode *LCA(TreeNode *r, int r1, int r2)
+    {
+        if (!r)
+            return NULL;
+        if (r->val == r1 || r->val == r2)
+            return r;
+        TreeNode *lt = LCA(r->left, r1, r2);
+        TreeNode *rt = LCA(r->right, r1, r2);
+        if (lt && rt)
+            return r;
+        if (lt)
+            return lt;
+        else
+            return rt;
     }
-    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        if(!root) return root;
-         return LCA(root,p->val,q->val);
+    TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *p, TreeNode *q)
+    {
+        if (!root)
+            return root;
+        return LCA(root, p->val, q->val);
     }
 };
-
