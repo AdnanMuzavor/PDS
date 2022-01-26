@@ -32,6 +32,8 @@ using namespace std;
 class Solution {
 public:
     int findDuplicate(vector<int>& nums) {
+        //BEST APPROACH IS TO USE BIT MANIPULATION
+
         //Brute Force Approach
         //int n=nums.size();
         // for(int i=0;i<n;i++){

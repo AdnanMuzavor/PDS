@@ -31,7 +31,8 @@ public:
         sort(v.begin(),v.end());
         for(int i=0;i<nums.size();i++){
             for(int j=i+1;j<nums.size();j++){
-                if((long long)v[i].first+t>=v[j].first){
+              //  if((long long)v[i].first+t>=v[j].first){
+                    if((long long)v[j].first-v[i].first<=t){
                     if(abs(v[i].second-v[j].second)<=k){
                         return true;
                     }
