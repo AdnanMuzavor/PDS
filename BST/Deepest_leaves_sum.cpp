@@ -37,6 +37,7 @@ struct TreeNode
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
+// METHOD-I
 class Solution
 {
 public:
@@ -78,3 +79,33 @@ public:
         return sum;
     }
 };
+
+// METHOD-II- level order traversal
+
+     int deepestLeavesSum(TreeNode* root) {
+        int res = 0, i;
+        queue<TreeNode*> q;
+        q.push(root);
+        while (q.size()) {
+            //Doing a typical level-order traversal
+            
+            //for-loop
+           // for (i = q.size() - 1, res = 0; i >= 0; --i) 
+            int sz=q.size();
+            res=0;
+            //while-loop
+            while(sz--)
+            {
+                
+                
+                //res i.e result will be rein itialise at every level
+                TreeNode* node = q.front(); q.pop();
+                //At last level res will have sum of nodes at this level
+                res += node->val;
+                if (node->right) q.push(node->right);
+                if (node->left)  q.push(node->left);
+            }
+        }
+         //res val at last level will be returned
+        return res;
+    }

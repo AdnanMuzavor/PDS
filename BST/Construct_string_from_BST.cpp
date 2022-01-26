@@ -13,7 +13,7 @@ Given the root of a binary tree, construct a string consisting of parenthesis an
 
 Omit all the empty parenthesis pairs that do not affect the one-to-one mapping relationship between the string and the original binary tree.
 
- 
+
 
 Example 1:
 
@@ -43,30 +43,46 @@ struct TreeNode
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
-class Solution {
+class Solution
+{
 public:
-    TreeNode*t=NULL;
-    string tostr(TreeNode*root,string s1){
-        if(!root && s1=="left") return "()";
-        if(!root && s1=="right") return "";
-        string s="";
-        if(!root->left && !root->right){
-            s+="(";
-            s+=to_string(root->val);
-            s+=")";
+    TreeNode *t = NULL;
+    string tostr(TreeNode *root, string s1)
+    {
+        // If dealing with left NODE which is null it should be "()"
+        if (!root && s1 == "left")
+            return "()";
+        // If dealing with right node which is NULL, no need of "()"
+        if (!root && s1 == "right")
+            return "";
+        string s = "";
+        // Dealing with leaf
+        if (!root->left && !root->right)
+        {
+            s += "(";
+            s += to_string(root->val);
+            s += ")";
             return s;
         }
-        if(t!=root)s+="(";
-        s+=to_string(root->val);
-        s+=tostr(root->left,"left");
-        s+=tostr(root->right,"right");
-        if(t!=root)s+=")";
+        // Dealing with middle nodes which are non-root
+        // As we want to avoid () for root node
+        if (t != root)
+            s += "(";
+        s += to_string(root->val);
+        s += tostr(root->left, "left");
+        s += tostr(root->right, "right");
+        if (t != root)
+            s += ")";
         return s;
     }
-    string tree2str(TreeNode* root) {
-        if(!root) return "";
-        if(!root->left && !root->right) return to_string(root->val);
-        t=root;
-        return tostr(root,"");
+    string tree2str(TreeNode *root)
+    {
+        if (!root)
+            return "";
+        // If root itself is leaf return it's val in string format
+        if (!root->left && !root->right)
+            return to_string(root->val);
+        t = root;
+        return tostr(root, "");
     }
 };
