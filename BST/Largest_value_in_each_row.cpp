@@ -36,6 +36,36 @@ struct TreeNode
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
+//OPTIMISED SOLUTION
+class Solution {
+public:
+    vector<int> op;
+    void helper(TreeNode*r,int row){
+        if(!r) return;
+       
+        //Indicates that element from this row was not yet compared
+        if(op.size()<=row){
+            op.push_back(r->val);
+        }
+        //Indicates that element from this row was added and now we 
+        //found another element in same row hence we compre and
+        //kepe the maximum one into the array
+        else{
+            op[row]=max(op[row],r->val);
+        }
+        //Finding left half wihich is at next level hence row+1
+        helper(r->left,row+1);
+        helper(r->right,row+1);
+    }
+    vector<int> largestValues(TreeNode* root) {
+        if(!root) return op;
+        helper(root,0);
+        return op;
+    }
+};
+
+
+//BRUTE FORCE
 class Solution
 {
 public:
