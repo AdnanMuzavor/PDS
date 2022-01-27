@@ -11,7 +11,7 @@ Add to List
 Share
 Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
 
- 
+
 
 Example 1:
 
@@ -45,6 +45,31 @@ public:
         : val(_val), left(_left), right(_right), next(_next) {}
 };
 
+// OPTIMISED APPROACH
+bool isSymmetric(TreeNode *root)
+{
+    if (!root)
+        return true;
+    return helper(root->left, root->right);
+}
+
+bool helper(TreeNode *p, TreeNode *q)
+{
+    // If it's leaf node,thn it's always symmetric
+    if (!p && !q)
+        return true;
+    // If one node exists and other doesn't
+    if (!p || !q)
+        return false;
+    // Since we are sending left of 1na dright of other
+    // Values are suppose to be equal
+    if (p->val != q->val)
+        return false;
+    // If it crosses above conditions means
+    // It;s syn now checking lower level
+    return helper(p->left, q->right) && helper(p->right, q->left);
+}
+// BRUTE FORCE
 class Solution
 {
 public:

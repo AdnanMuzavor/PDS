@@ -52,23 +52,32 @@ public:
 };
 class Solution
 {
-    string answer = "~";
-
 public:
-    void recure(TreeNode *root, string s)
+    // initialise with '~' because '~' has maximum value
+    string sol = "~";
+    void recur(TreeNode *r, string s)
     {
-        if (!root)
+        if (!r)
             return;
-        if (!root->left && !root->right)
+        if (!r->left && !r->right)
         {
-            answer = min(answer, char(root->val + 'a') + s);
+            sol = min(sol, char(r->val + 'a') + s);
         }
-        recure(root->left, char(root->val + 'a') + s);
-        recure(root->right, char(root->val + 'a') + s);
+        // r->val+'a' will give value startimg from
+        // 97 when r->val=0
+        // 98 when r->val=1
+        // and so on
+        // further
+        // char(97)-> 'a'
+        // char(98)-> 'b'
+        // and so on
+        // this will be appended to string before further processing
+        recur(r->left, char(r->val + 'a') + s);
+        recur(r->right, char(r->val + 'a') + s);
     }
     string smallestFromLeaf(TreeNode *root)
     {
-        recure(root, "");
-        return answer;
+        recur(root, "");
+        return sol;
     }
 };
