@@ -31,7 +31,18 @@ using namespace std;
 
 class Solution {
 public:
+unordered_map<int,int> m;
     int findDuplicate(vector<int>& nums) {
+       //Efficient approach
+          //Approach 1->using space
+       
+        for(auto e:nums) {
+             if(m[e])return true;
+             else m[e]++;
+        }
+        return false;
+
+
         //BEST APPROACH IS TO USE BIT MANIPULATION
 
         //Brute Force Approach

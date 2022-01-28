@@ -64,28 +64,31 @@ public:
 class Solution
 {
 public:
-    vector<string> v;
-    void recur(TreeNode *r, string s)
+    vector<long long int> v;
+    int sum = 0;
+    void recur(TreeNode *r, long long int s)
     {
         if (!r)
             return;
         if (!r->left && !r->right)
         {
-            s += to_string(r->val);
-            // cout<<s<<endl;
-            v.push_back(s);
+            s = s * 10 + (r->val);
+            sum += s;
+            // v.push_back(s);
         }
-        recur(r->left, s + to_string(r->val));
-        recur(r->right, s + to_string(r->val));
+        recur(r->left, s * 10 + (r->val));
+        recur(r->right, s * 10 + (r->val));
     }
     int sumNumbers(TreeNode *root)
     {
-        recur(root, "");
-        for (auto e : v)
-        {
-            cout << e << endl;
-        }
-        cout << v[0] + v[1] << endl;
-        return 1;
+        recur(root, 0);
+
+        // Approach 2 if vector i.e extra space is used
+        // long long int s=0;
+        //  for(auto e:v){
+        //      s+=e;
+        //  }
+
+        return sum;
     }
 };
