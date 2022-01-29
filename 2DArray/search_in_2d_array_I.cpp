@@ -13,7 +13,7 @@ Write an efficient algorithm that searches for a value in an m x n matrix. This 
 
 Integers in each row are sorted from left to right.
 The first integer of each row is greater than the last integer of the previous row.
- 
+
 
 Example 1:
 
@@ -29,24 +29,37 @@ Output: false
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
-    bool searchMatrix(vector<vector<int>>& matrix, int target) {
-        if(target< matrix[0][0]) return false;
-        
-        int cols=matrix[0].size();
-        int rows=matrix.size();
-        
-        if(target> matrix[rows-1][cols-1]){ return false;}
-        cout<<rows<<" "<<cols<<endl;
-        int soln=rows-1;
-        for(int i=1;i<rows;i++){
-            cout<<"checling: "<<matrix[i][0]<<endl;
-            if(target<matrix[i][0]){
-                soln=i-1;
+    bool searchMatrix(vector<vector<int>> &matrix, int target)
+    {
+        if (target < matrix[0][0])
+            return false;
+
+        int cols = matrix[0].size();
+        int rows = matrix.size();
+        // If value < first ele or > last element
+        if (target > matrix[rows - 1][cols - 1])
+        {
+            return false;
+        }
+        cout << rows << " " << cols << endl;
+        // Setting soln row to last row
+        int soln = rows - 1;
+        for (int i = 1; i < rows; i++)
+        {
+            cout << "checling: " << matrix[i][0] << endl;
+            // If ele to be found is < curr rows first elemet soln
+            // row is row above it else by default it'll be last row
+            if (target < matrix[i][0])
+            {
+                soln = i - 1;
                 break;
             }
-            else if(target==matrix[i][0]||target==matrix[i][cols-1]){
+            // If by any chance we are able to find an element we can deal with it here itself
+            else if (target == matrix[i][0] || target == matrix[i][cols - 1])
+            {
                 return true;
             }
             // else if(target>matrix[i][cols-1]){
@@ -54,9 +67,12 @@ public:
             //     break;
             // }
         }
-        cout<<"soln: mat is: "<<soln<<endl;
-        for(int i=0;i<cols;i++){
-            if(matrix[soln][i]==target){
+        // Searching in row where ans is expected to be found
+        cout << "soln: mat is: " << soln << endl;
+        for (int i = 0; i < cols; i++)
+        {
+            if (matrix[soln][i] == target)
+            {
                 return true;
             }
         }

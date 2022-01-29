@@ -45,6 +45,57 @@ public:
     TreeNode(int _val, TreeNode *_left, TreeNode *_right, TreeNode *_next)
         : val(_val), left(_left), right(_right), next(_next) {}
 };
+// Approach 1 :Recursion
+class Solution
+{
+public:
+    bool sametree(TreeNode *r1, TreeNode *r2)
+    {
+        // Both are NULL
+        if (!r1 && !r2)
+            return true;
+        // One of them is NULL
+        if (!r1 || !r2)
+            return false;
+        // Both exist and have equal values
+        if (r1 && r2 && r1->val == r2->val)
+        {
+            bool a = sametree(r1->left, r2->left);   // Checking left subtrees
+            bool b = sametree(r1->right, r2->right); // checking right subtrees
+            //  If left and right subtree both matches
+
+            if (a && b)
+                return true;
+        }
+        return false;
+    }
+    bool isSubtree(TreeNode *root, TreeNode *subroot)
+    {
+        if (root && !subroot)
+            return true;
+        if (!root && subroot)
+            return false;
+        // Checking if root and subroot both are same trees
+        if (sametree(root, subroot))
+        {
+            return true;
+        }
+
+        // Else checking root's left and root'right
+        bool a = isSubtree(root->left, subroot);
+        // If left subtree gives wrequired ans no need to check next
+        if (a)
+            return true;
+        bool b = isSubtree(root->right, subroot);
+        // If any one of the two is true means subtree is found
+        // hence return true
+        if (a || b)
+            return true;
+        return false;
+    }
+};
+
+//  Approach 2: mapping strings
 class Solution
 {
 public:
