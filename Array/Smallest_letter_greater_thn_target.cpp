@@ -31,6 +31,36 @@ Output: "f"
 */
 #include <bits/stdc++.h>
 using namespace std;
+// SINCE ARRAY IS SORTED WE CAN USE BINARY SEARCH METHOD
+class Solution
+{
+public:
+    char nextGreatestLetter(vector<char> &letters, char target)
+    { // if target is >last element or equal to last element
+        // i.e letters["a","b"] target z or target b, in this case
+        // we return first most element in array
+        if (target >= letters[letters.size() - 1])
+            return letters[0];
+        int l = 0, h = letters.size() - 1;
+        while (l < h)
+        {
+            int mid = (l + h) / 2;
+            // if letter at mid is > target that means ans lies between
+            // that is highest index where i can get answer
+            if (letters[mid] > target)
+            {
+                h = mid;
+            }
+            // else lower point will shift to after mid
+            else
+            {
+                l = mid + 1;
+            }
+        }
+        return letters[l];
+    }
+};
+// BRUTE FORCE
 class Solution
 {
 public:
