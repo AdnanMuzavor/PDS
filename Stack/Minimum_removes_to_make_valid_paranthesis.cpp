@@ -41,6 +41,39 @@ using namespace std;
 class Solution
 {
 public:
+    // BETTER APPROACH
+    string minRemoveToMakeValid(string s)
+    {
+        stack<int> st;
+        for (auto i = 0; i < s.size(); ++i)
+        {
+            // Instead of pushing '(' push it's index i
+            if (s[i] == '(')
+                st.push(i);
+            if (s[i] == ')')
+            {
+                // is stack is not empty means pair of parathesis is valid
+                // hence index of '(' corresponding to current ')' is pop
+                if (!st.empty())
+                    st.pop();
+                // is stack is empty means correspinding ')' has no '('
+                // and hence invalid so we replace s[i]='*' to keep track
+                else
+                    s[i] = '*';
+            }
+        }
+        // If stack is not empty thn it means we have '(' with no closing '('
+        // hence invalid so we make elements at this indices b'*' so has to erase them
+        while (!st.empty())
+        {
+            s[st.top()] = '*';
+            st.pop();
+        }
+        // erasing all '*' as they represent invalid paranthesis
+        s.erase(remove(s.begin(), s.end(), '*'), s.end());
+        return s;
+    }
+    // BRUTE FORCE
     string minRemoveToMakeValid(string s1)
     {
         int n = s1.size(), i = 0;
