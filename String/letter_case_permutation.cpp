@@ -26,7 +26,50 @@ Output: ["3z4","3Z4"]
 */
 #include <bits/stdc++.h>
 using namespace std;
-//BRUTE FORCE
+// OPTIMISED SOLUTION
+class Solution
+{
+public:
+    vector<string> ans;
+    void permut(string curr, string s, int i)
+    {
+        // If i==length of string s, means we have tracersed and
+        // processed the string so we can push it into the ans
+        if (i >= s.length())
+        {
+            ans.push_back(curr);
+            return;
+        }
+        // If current element is digit we simply push it into the
+        // current string and go to next index
+        if (isdigit(s[i]))
+        {
+            curr.push_back(s[i]);
+            permut(curr, s, i + 1);
+        }
+        else
+        {
+            // If character is alphabet
+
+            // First processing by keeping alphabet lower case
+            string c1 = curr;
+            c1.push_back(tolower(s[i]));
+            permut(c1, s, i + 1);
+
+            // Thn procesing by making alphabet upper case
+            string c2 = curr;
+            c2.push_back(toupper(s[i]));
+            permut(c2, s, i + 1);
+        }
+    }
+    vector<string> letterCasePermutation(string s)
+    {
+        ans.clear(); // Removing garbage values if any
+        permut("", s, 0);
+        return ans;
+    }
+};
+// BRUTE FORCE
 class Solution
 {
 public:
@@ -43,21 +86,21 @@ public:
             // dfs(op,s,i-1);
         }
         int val = s[i];
-        //If letter is small process it before making capital and after making capital
+        // If letter is small process it before making capital and after making capital
         if (val >= 65 && val <= 90)
         {
             dfs(op, s, i + 1);
             s[i] = s[i] + 32;
             dfs(op, s, i + 1);
         }
-        //If letter is capital process it before making small and after making small
+        // If letter is capital process it before making small and after making small
         else if (val >= 97 && val <= 122)
         {
             dfs(op, s, i + 1);
             s[i] = s[i] - 32;
             dfs(op, s, i + 1);
         }
-        //If it's not a letter process next character
+        // If it's not a letter process next character
         else
         {
             dfs(op, s, i + 1);
