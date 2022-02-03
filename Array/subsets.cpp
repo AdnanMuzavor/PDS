@@ -26,10 +26,46 @@ Output: [[],[0]]
 */
 #include <bits/stdc++.h>
 using namespace std;
-
 class Solution
 {
 public:
+    vector<vector<int>> op;
+
+    void permut(vector<int> curr, vector<int> &nums, int i)
+    {
+
+        if (i > nums.size() || i < 0)
+        {
+
+            return;
+        }
+
+        if (i == nums.size())
+        {
+
+            op.push_back(curr);
+            return;
+        }
+        // not including nums[i] in subset
+        permut(curr, nums, i + 1);
+        // including nums[i] in subset
+        curr.push_back(nums[i]);
+        permut(curr, nums, i + 1);
+    }
+    vector<vector<int>> subsets(vector<int> &nums)
+    {
+
+        vector<int> curr;
+
+        permut(curr, nums, 0);
+
+        return op;
+    }
+};
+class Solution
+{
+public:
+    // Actually set not needed because final result is already sorted
     set<vector<int>> op;
 
     void permut(vector<int> curr, vector<int> &nums, int i)
