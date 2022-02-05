@@ -37,6 +37,37 @@ struct TreeNode
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
+// More clear and easy soln
+class Solution
+{
+public:
+    int findBottomLeftValue(TreeNode *root)
+    {
+        if (!root->left && !root->right)
+            return root->val;
+        queue<TreeNode *> q;
+        int ans = 0;
+        q.push(root);
+        // Do level order traversal such that you add right node
+        // first and thn the left node
+        while (!q.empty())
+        {
+            int sz = q.size();
+            while (sz--)
+            {
+                TreeNode *t = q.front();
+                q.pop();
+                // At blast level which ever node is last,it's value will be preserved in ans
+                ans = t->val;
+                if (t->right)
+                    q.push(t->right);
+                if (t->left)
+                    q.push(t->left);
+            }
+        }
+        return ans;
+    }
+};
 
 class Solution
 {
