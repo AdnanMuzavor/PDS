@@ -51,6 +51,21 @@ It does not matter what you leave beyond the returned k (hence they are undersco
 
 #include <bits/stdc++.h>
 using namespace std;
+// Optimised soln
+// check intrision from book
+int removeDuplicates(vector<int> &nums)
+{
+    int n = nums.size(), count = 0;
+    for (int i = 2; i < n; i++)
+    {
+        if (nums[i] == nums[i - 2 - count])
+            count++;
+        else
+            nums[i - count] = nums[i];
+    }
+    return n - count;
+}
+// My soln
 class Solution
 {
 public:
@@ -59,6 +74,7 @@ public:
         int sz = nums.size();
         if (sz == 1 || sz == 2)
             return sz;
+        // Store in map to keep record of occurence of each
         map<int, int> m;
         //  sort(m.begin(),m.end());
         for (auto e : nums)
@@ -68,12 +84,16 @@ public:
         nums.clear();
         for (auto e : m)
         {
+            // Elements which occur more thn twice should be there in array
+            // only twice so pushing them twice
             if (e.second >= 2)
             {
                 nums.push_back(e.first);
                 nums.push_back(e.first);
                 sz--;
             }
+            // Else it means elemet occursb only once so
+            // pushing into array only once
             else
             {
                 nums.push_back(e.first);
