@@ -22,7 +22,7 @@ Example 2:
 Input: nums = [1,2,3], k = 3
 Output: 2
 */
-
+//REFER NEETCODE VIDEO FOR INTUITION
 #include <bits/stdc++.h>
 using namespace std;
 // optimised(tech dose)
@@ -73,3 +73,4 @@ public:
         return count;
     }
 };
+
