@@ -108,3 +108,45 @@ public:
         return NULL;
     }
 };
+// SOLN ON NOTEBOOK, O(1) SPACE
+
+class Solution
+{
+public:
+    ListNode *reverseBetween(ListNode *head, int left, int right)
+    {
+        // Creating pointers
+        // prev initiallyNULL
+        // Lprev to point at node just before reversal starts
+        // Dummy node to help us handle case if we are reversing from index 1
+        ListNode *dummy = new ListNode(0);
+        dummy->next = head;
+        ListNode *lprev = dummy;
+        ListNode *curr = head;
+        // Moving curr to reach to left positioned node
+        int move = left - 1;
+        while (move--)
+        {
+            lprev = curr;
+            curr = curr->next;
+        }
+        // Reversing linkedlist from current
+        // Prev initially at NULL;
+        ListNode *prev = NULL;
+        ListNode *nxt = NULL;
+        int revtimes = right - left + 1;
+        while (revtimes--)
+        {
+            nxt = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = nxt;
+        }
+        // At the end the last node of reversed liinkedlist will be located at next of
+        // lprev node
+        // curr will be node at just after right positioned node
+        lprev->next->next = curr;
+        lprev->next = prev;
+        return dummy->next;
+    }
+};

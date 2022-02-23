@@ -108,3 +108,64 @@ public:
         head = res;
     }
 };
+
+// Without extra space
+
+class Solution
+{
+public:
+    ListNode *rev(ListNode *h)
+    {
+        ListNode *curr = h;
+        ListNode *prev = NULL;
+        ListNode *nxt = NULL;
+        while (curr)
+        {
+            nxt = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = nxt;
+        }
+        return prev;
+    }
+    void reorderList(ListNode *head)
+    {
+        ListNode *slow = head;
+        ListNode *fast = head;
+        ListNode *q = NULL;
+        while (fast && fast->next)
+        {
+            q = slow;
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        slow = rev(slow);
+        // 1->2->n
+        // 4->3->n
+        int i = 1;
+        ListNode *p = head; // p on one linkedlist
+        p = p->next; //as we have already included first node hence index also is 1
+        // slow on other linkd list
+        // result to point on final LL
+        ListNode *res = head;
+        ListNode *temp = head; //temp to hlp linking nodes
+        while (p && slow)
+        {
+            if (i % 2 == 0)
+            {
+                temp->next = p;
+                p = p->next ? p->next : NULL;
+                temp = temp->next;
+                i++;
+            }
+            else
+            {
+                temp->next = slow;
+                slow = slow->next ? slow->next : NULL;
+                temp = temp->next;
+                i++;
+            }
+        }
+        head = res;
+    }
+};

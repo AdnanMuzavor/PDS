@@ -90,8 +90,54 @@ public:
             p = p->next;
         }
 
-        p->next = p->next ? p->next->next : NULL;
+        p->next = node->next;
 
         return head;
+    }
+};
+// EFFIECIENT SLN
+/*
+The difference between the final node and the to_be_delete node is N. And here the assumption is that n is always valid.
+
+fast pointer points to the node which is N step away from the to_be_delete node.
+
+slow pointer points to the to_be_delete node.
+
+The algorithms is described as below:
+
+Firstly, move fast pointer N step forward.
+
+Secondly,move fast and slow pointers simultaneously one step a time forward till the fast pointer reach the end, which will cause the slow pointer points to the previous node of the to_be_delete node.
+
+Finally, slow->next = slow->next->next.
+*/
+class Solution
+{
+public:
+    ListNode *removeNthFromEnd(ListNode *head, int n)
+    {
+        if (!head)
+            return nullptr;
+
+        ListNode new_head(-1);
+        new_head.next = head;
+
+        ListNode *slow = &new_head, *fast = &new_head;
+
+        for (int i = 0; i < n; i++)
+            fast = fast->next;
+
+        while (fast->next)
+        {
+            fast = fast->next;
+            slow = slow->next;
+        }
+
+        ListNode *to_be_deleted = slow->next;
+        slow->next = slow->next->next;
+
+        delete to_be_deleted;
+
+        return new_head.next;
     }
 };
