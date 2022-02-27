@@ -54,6 +54,7 @@ struct ListNode
 class Solution
 {
 public:
+//Confusing solution
     ListNode *removeElements(ListNode *head, int val)
     {
         // Empty list case
@@ -90,5 +91,24 @@ public:
             return p;
         }
         return head;
+    }
+};
+//Clear solution
+class Solution {
+public:
+    ListNode* removeElements(ListNode* head, int val) {
+        ListNode*dummy=new ListNode(-1);
+        ListNode*prev=dummy;
+        dummy->next=head;
+        while(head){
+            if(head->val==val){
+                prev->next=head->next;
+            }
+            else{
+                prev=prev->next;
+            }
+            head=head->next;
+        }
+        return dummy->next;
     }
 };

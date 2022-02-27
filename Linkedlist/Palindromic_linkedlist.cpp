@@ -36,7 +36,7 @@ struct ListNode
     ListNode(int x) : val(x), next(nullptr) {}
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
-
+// O(N)+O(N)
 class Solution
 {
 public:
@@ -79,5 +79,47 @@ public:
         if (s.empty())
             return true;
         return false;
+    }
+};
+// O(N)+O(1)
+
+class Solution
+{
+public:
+    ListNode *rev(ListNode *h)
+    {
+        ListNode *curr = h;
+        ListNode *prev = NULL;
+        ListNode *nxt = NULL;
+        while (curr)
+        {
+            nxt = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = nxt;
+        }
+        return prev;
+    }
+    bool isPalindrome(ListNode *head)
+    {
+        ListNode *slow = head, *dummy = head;
+        ListNode *fast = head;
+        while (fast->next && fast->next->next)
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        slow->next = rev(slow->next);
+        slow = slow->next;
+        while (slow)
+        {
+            if (dummy->val != slow->val)
+            {
+                return false;
+            }
+            dummy = dummy->next;
+            slow = slow->next;
+        }
+        return true;
     }
 };
