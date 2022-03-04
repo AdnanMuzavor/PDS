@@ -1,0 +1,74 @@
+/*
+1971. Find if Path Exists in Graph
+Easy
+
+740
+
+42
+
+Add to List
+
+Share
+There is a bi-directional graph with n vertices, where each vertex is labeled from 0 to n - 1 (inclusive). The edges in the graph are represented as a 2D integer array edges, where each edges[i] = [ui, vi] denotes a bi-directional edge between vertex ui and vertex vi. Every vertex pair is connected by at most one edge, and no vertex has an edge to itself.
+
+You want to determine if there is a valid path that exists from vertex source to vertex destination.
+
+Given edges and the integers n, source, and destination, return true if there is a valid path from source to destination, or false otherwise.
+
+
+
+Example 1:
+
+
+Input: n = 3, edges = [[0,1],[1,2],[2,0]], source = 0, destination = 2
+Output: true
+Explanation: There are two paths from vertex 0 to vertex 2:
+- 0 → 1 → 2
+- 0 → 2
+Example 2:
+
+
+Input: n = 6, edges = [[0,1],[0,2],[3,5],[5,4],[4,3]], source = 0, destination = 5
+Output: false
+Explanation: There is no path from vertex 0 to vertex 5.
+*/
+#include <bits/stdc++.h>
+using namespace std;
+class Solution
+{
+public:
+    bool validPath(int n, vector<vector<int>> &edges, int source, int destination)
+    {
+        vector<int> adj[n + 1];
+        // Making adjancency list graph
+        for (auto e : edges)
+        {
+            adj[e[0]].push_back(e[1]);
+            adj[e[1]].push_back(e[0]);
+        }
+        // Mkaing visisted array to keep track of visoted nodes
+        vector<int> vis(n + 1, 0);
+        queue<int> q;
+        q.push(source);
+        vis[source] = 1;
+        // Visiting nodes
+        while (!q.empty())
+        {
+            int node = q.front();
+            q.pop();
+            for (auto e : adj[node])
+            {
+                // If not visited, pushing into queue
+                if (!vis[e])
+                {
+                    vis[e] = 1;
+                    q.push(e);
+                }
+            }
+        }
+        // If destination node could be visited
+        if (vis[destination] == 1)
+            return true;
+        return false;
+    }
+};
